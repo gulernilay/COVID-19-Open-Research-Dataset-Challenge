@@ -1,96 +1,110 @@
 # COVID-19 Open Research Dataset Challenge (CORD-19)
 
-Bu proje, COVID-19 ile ilgili bilimsel makalelerin yer aldığı CORD-19 veri seti üzerinde kapsamlı bir keşifçi veri analizi (EDA), aykırı değer analizi ve veri görselleştirme çalışması sunar. Amaç, veri setindeki önemli eğilimleri, eksiklikleri ve öne çıkan noktaları ortaya çıkarmak ve araştırmacılara hızlı bir genel bakış sağlamaktır.
+This project presents a comprehensive exploratory data analysis (EDA), outlier analysis, missing value analysis, correlation analysis, and data visualization on the CORD-19 dataset, which contains scientific articles related to COVID-19. The goal is to uncover key trends, missing elements, and notable patterns within the dataset, providing researchers with a quick and insightful overview.
 
 ---
 
-## 📂 Proje İçeriği
+## 📂 Project Content
 
-- **Veri Yükleme ve Temizleme**
+- **Dataset Upload and Examination**
 
-  - `metadata.csv` dosyasının yüklenmesi
-  - Eksik ve gereksiz sütunların temizlenmesi
-  - Temiz veri setinin oluşturulması
+- Load the dataset `metadata.csv`  
+  [CORD-19 Dataset (metadata.csv)](https://www.kaggle.com/datasets/allen-institute-for-ai/CORD-19-research-challenge/data?select=metadata.csv)
 
-- **Keşifçi Veri Analizi (EDA)**
+- ## 1. Dataset Information
+  The **CORD-19 dataset** is a comprehensive and openly accessible resource that systematically compiles scientific publications related to the COVID-19 pandemic for use by researchers. Published by the **Allen Institute for AI**, this dataset contains **over one million records**.The accompanying **metadata.csv** file includes key metadata for each academic article, such as the title, abstract, author information, and publication date. In this study, the dataset was loaded, its structure examined, and it was prepared for conducting fundamental analyses.
 
-  - Sayısal ve kategorik değişkenlerin istatistiksel özetleri
-  - Sütun tipleri, benzersiz değerler, veri dağılımları
+#### Columns in `metadata.csv`
 
-- **Eksik Veri Analizi**
+- **cord_uid**: Unique identifier for each CORD-19 article (same article may appear in multiple sources)
+- **sha**: SHA-1 hash values of the PDF files, separated by semicolons if multiple
+- **source_x**: Sources where the article was obtained (e.g., ArXiv, Elsevier, PMC, WHO), separated by semicolons
+- **title**: Title of the article
+- **doi**: Digital Object Identifier (DOI) of the article
+- **pmcid**: PubMed Central ID of the article (starts with PMC)
+- **pubmed_id**: PubMed ID of the article (integer)
+- **license**: License type (e.g., cc-by, gold-oa, etc.)
+- **abstract**: Abstract text of the article
+- **publish_time**: Date of publication (YYYY-MM-DD)
+- **authors**: List of authors (Last name, First name; separated by semicolons)
+- **journal**: Journal where the article was published (raw text, not normalized)
+- **mag_id**: Microsoft Academic Graph ID (deprecated)
+- **who_covidence_id**: WHO-assigned unique article ID (e.g., "#72306")
+- **arxiv_id**: Identifier in arXiv
+- **pdf_json_files**: File paths for JSON-converted versions of PDFs (semicolon-separated)
+- **pmc_json_files**: File paths for JSON-parsed versions of PMC XML files (semicolon-separated)
+- **url**: All URLs related to the article (semicolon-separated)
+- **s2_id**: Semantic Scholar ID of the article (usable with API)
 
-  - Eksik veri oranlarının hesaplanması
-  - Eksik verilerin görselleştirilmesi (bar plot, matrix plot)
+  ### **Explotary Data Analysis (EDA)**
 
-- **Aykırı Değer Analizi**
+  - df.head(), df.tail(), df.info(), df.describe(include='all').T, df.shape, print(df.nunique()), df.duplicated().any()
+    -Statistical summaries of numerical and categorical variables
+    -Column types, unique values, and data distributions
 
-  - Yayın yılı gibi değişkenlerde aykırı değerlerin tespiti (IQR yöntemi, eşik değerler)
-  - Boxplot ve istatistiksel özetlerle aykırı değerlerin sunulması
+### **Missing Value Analysis**
 
-- **Veri Görselleştirme**
-  - Yayın kaynaklarının dağılımı (bar plot)
-  - Lisans türlerinin dağılımı (pie chart, bar plot)
-  - En çok yayın yapan dergiler (bar plot)
-  - Aylık yayın trendleri (line plot, area plot)
+- Calculate the number and percentage of missing values for each column
+- Visualize the distribution of missing values (e.g., bar plot, matrix plot, heatmap)
+
+- ### **Outlier Analysis**
+- Detection of outliers in numerical columns using the IQR method
+- Calculation of standard deviation and skewness values to determine the appropriate outlier handling strategy
+- Identification of outliers in variables such as publication year (using IQR thresholds)
+- Presentation of outliers with boxplots and statistical summaries
+
+- ### **Correlation Matrix**
+
+- ### **Data Visualization**
+  - Bar plot for distribution of publication sources
+  - Pie chart for distribution of publication licenses
+  - Bar plot of the top publishing journals
+  - Line plot for the number of publications by year
+  - Histogram/Distribution plot for abstract length
 
 ---
 
-## 🚀 Nasıl Kullanılır?
+## 🚀 How to Use
 
-1. **Gereksinimler**
+1. **Requirements**
 
    - Python 3.x
-   - Gerekli kütüphaneler:
+   - Required libraries:
      ```bash
      pip install pandas numpy matplotlib seaborn missingno
      ```
 
-2. **Veri Seti**
+2. **Dataset**
 
-   - [CORD-19 metadata.csv](https://www.semanticscholar.org/cord19) dosyasını proje klasörüne ekleyin.
+   - Download and add the file [CORD-19 metadata.csv](https://www.kaggle.com/datasets/allen-institute-for-ai/CORD-19-research-challenge/data?select=metadata.csv) to the project folder.
 
-3. **Notebookları Çalıştırma**
-   - `main.ipynb` veya `cord-19-data-analysis-project.ipynb` dosyalarını Jupyter Notebook veya VS Code ile açıp adım adım çalıştırabilirsiniz.
+3. **Running the Notebooks**
+
+   - Open and run step by step either `main.ipynb` using **Jupyter Notebook** or **VS Code**.
 
 ---
 
-## 📁 Dosya Açıklamaları
+## 📁 File Descriptions
 
 - **main.ipynb**  
-  Ana analiz ve görselleştirme adımlarını içerir.
-
-- **cord-19-data-analysis-project.ipynb**  
-  Alternatif analizler ve ek grafikler içerir.
+  Contains the main analysis steps, statistical summaries, and visualizations.
 
 - **metadata.csv**  
-  CORD-19 veri seti (dışarıdan temin edilmelidir).
+  The CORD-19 dataset (must be downloaded separately as described above).
+
+## 📌 Notes
+
+- The dataset contains a significant amount of missing and outdated records; these issues were considered during the analysis.
+- The notebooks include explanations to support learners in **data science** and **data analysis**.
+- Contributions and feedback are welcome via pull requests.
 
 ---
 
-## 📊 Örnek Grafikler
+## 🔗 References
 
-- Yayın kaynaklarının dağılımı (bar plot)
-- Lisans türlerinin dağılımı (pie chart & bar plot)
-- En çok yayın yapan dergiler (horizontal bar plot)
-- Aylık yayın trendleri (line plot & area plot)
-- Yayın yılı dağılımı ve aykırı değerler (boxplot, histogram)
+- [CORD-19 Dataset - Kaggle](https://www.kaggle.com/datasets/allen-institute-for-ai/CORD-19-research-challenge)
 
 ---
 
-## 📌 Notlar
-
-- Veri setinde çok sayıda eksik ve eski tarihli kayıt olabilir. Analizlerde bu durum dikkate alınmıştır.
-- Kodlar ve görseller, veri bilimi ve veri analizi öğrenmek isteyenler için açıklamalı olarak hazırlanmıştır.
-- Her türlü katkı ve geri bildirim için pull request gönderebilirsiniz.
-
----
-
-## 🔗 Kaynaklar
-
-- [CORD-19 Dataset - Semantic Scholar](https://www.semanticscholar.org/cord19)
-- [CORD-19 Kaggle](https://www.kaggle.com/datasets/allen-institute-for-ai/CORD-19-research-challenge)
-
----
-
-**Hazırlayan:**  
-[Adınızı buraya yazabilirsiniz]
+**Prepared by:**  
+Nilay Güler
